@@ -1,0 +1,137 @@
+Purpose/Overview:
+
+This program is a total extension of hw 4’s code to create an image-based game using Qt that users can play by inputting commands on the keyboard. The game will have many more objects of different types, purpose, and movement. The game will have at least 3 levels as well.
+
+Requirements:
+
+The user must be able to play the game through keyboard input. The game requires a minimum of 12 different object types (classes), each represented by a different character, in addition to the player’s character. The objects must have some sort of interaction with the player as they cross paths. There must be objects that follow and/or shoot the player. The program must also display a life counter and score, keeping track of each as the game continues. If the player loses all their lives, there must be relative output and an option to restart the game. The same applies if the character wins the game. 
+
+Classes:
+This program includes several classes to represent and manage each in-game object, as well as the game window and the game itself.
+
+Classes include:
+Objects:
+1.	Player class- will handle player’s image, location and movement
+2.	Civilian class- will handle image, location, automatic movement, and direction/speed
+3.	Landmine class- will handle image, location, and spawn location
+4.	Zombie class- will handle bouncing movement, location, image, location, and direction/speed.
+5.	Zombie2 class- same as Zombie class, but different image and moves differently
+6.	Zombie3 class- same as Zombie class but movement is restricted to up and down directions.
+7.	Bg class- will either print a transparent screen or an image to “change” level background.
+8.	Boss class- will handle boss creature’s movement and image, etc.
+9.	BossWeapon class – will create a weapon for the boss.
+10.	Car class- will create several zombies on mower’s in second level.
+11.	Car2 class- will create a faster, larger zombie-piloted airship in second level.
+12.	Life class – will create life pickups for the character, and a fake one.
+13.	Pshot class – will make the player shoot bullets automatically in the final level
+14.	Shooter class- will create 4 ships to shoot at player in 3rd level
+15.	Shot class – what the shooters attack the player with
+16.	Switch class- buttons to press in the second level, eventually one leads to 3rd level.
+
+Zomgame class-
+Handles the majority of the program’s code. It draws the objects’ images when and where they need to be, uses a timer to simulate automatic movement for some objects, and handles user input to control player movement or start/restart/pause/quit the game.
+Also handles output if player wins or loses the game, and handles interactions between the player and other objects. 
+
+Global Data/Functions
+
+The only global variables I used are in zomgame.cpp. They are: int lives, and int score, int shots, and int bosslife. I made these global variables because their values are defined, modified, printed, and reset in different functions in the zomgame.cpp file. Lives call the game over screen if it reaches 0, score can rise to any amount but will start the second level after it reaches a certain amount, shots handles amount of bullets to dodge in third level and starts final level when it reaches 0, and bosslife handles the boss object’s health. The player will win the game when this is 0.
+
+
+These functions are used within my classes:
+
+void resetState(); --creates default state (location, direction of movement, etc.) for objects and assigns it.
+
+void moveBottom(int); --handles downward movement
+
+void moveTop(int); --handles upward movement
+
+void moveLeft(int); --handles leftward movement
+
+void moveRight(int); --handles rightward movement
+
+QRect getRect(); -- handles dimensions of objects and images and other attributes of objects
+
+QImage & getImage(); --loads and assigns image files to represent characters
+
+void autoMove(); --handles automatic movement and direction objects travel
+
+void setXDir(int); --sets direction of movement on x axis
+
+void setYDir(int); --sets direction movement on y axis
+
+int getXDir(); --gets x axis direction
+
+int getYDir(); --gets y axis direction
+
+void paintEvent(QPaintEvent *event);   draws object images and text where stated
+
+void timerEvent(QTimerEvent *event); waits a certain time until an action is made
+
+void keyPressEvent(QKeyEvent *event); waits for user to choose an action to take
+
+void startGame();  starts game
+
+void pauseGame(); pauses game
+
+void stopGame();  ends game and displays win/game over screen
+
+void victory(); shows game win output
+
+void checkCollision(); handles interactions between player and objects
+
+High-Level Architecture
+
+Open the game window displaying all in game objects and lives/score at the top of game window. 
+
+All objects will appear in their respective locations in each level and will only appear during that level so as to not interfere with the others.
+
+Player will move on a step basis (one move per input by the player). All game objects will either move automatically or stay in one place. Player must reach a certain score to beat the first level, complete a certain number of actions in the second, survive in the third, and defeat the final boss to win the game.
+
+If the player loses all their lives, the screen will clear and display a game over screen. Either way, the player will have an option to try again and restart from the beginning of the game, with fresh lives and a score of 0. Other wise the player can quit and close the game window. They can also restart the game and quit at any time during the game.
+
+User Interface
+
+Through Qt capabilities, the user has the option to enter commands to the program through the keyboard.
+
+Test Cases
+
+Test the abilities of the objects: Make sure the player can move using the ARROW keys, dies when touched by any killing object, saves the civilian when running into them, as well as interacting with other objects. Objects must respawn the player to some location.
+
+
+Game Description
+
+You are a special agent, 7, and there has been a viral outbreak causing humans to turn into zombies!!!!!! 
+You must go through abandoned streets and battlefields avoiding all zombies and saving any survivors that you come across.
+
+Move around using the ARROW keys. 
+
+Press Esc key at any time to quit the game before reaching the game over screen.
+
+Level 1:
+Avoid the hazards and rescue civilians!
+
+Steer clear of zombies at all times. Two move all over the place while one moves up and down.
+
+Civilians are running around the screen. Save them from the dangerous area (as of now civilians are invulnerable to zombies, later may become zombies if infected)
+
+Landmines will kill you if you step on them (may NOT kill you if you step on the edge but will surely kill you if you stand on it completely).
+
+You have to save the civilian many times to win the level, losing lives decreases score while rescues increase it. Reach a certain score to move on. 
+
+Level2:
+Frogger Anyone?
+
+The roads are also taken over by zombies! You can’t swap sides of the screen (don’t even try it wont work) in this level. Avoid the zombie drivers and press the buttons by running into them to make new ones appear. A few buttons later will spawn one that will take you to the next level.
+
+There are a few lives here for you….or it could be a clever zombie trap…don’t always listen to what the game tells you 
+
+Level 3:
+Zombies in SPAAACE!!
+
+Thrown straight into the middle of space ships….piloted by zombies….and theyre all gunning for you!!
+All you need to do in this level is survive round after round of attacks…but it could be harder than it looks…
+
+Level 4:  
+THE END!?
+Now facing an unforgiving creature….possibly the leader of the zombie invasion! Armed with a small but potent automatic weapon somehow obtained in the previous level, you now have a chance to fight back!! Survive the final fight! And KILL THAT THING!
+
