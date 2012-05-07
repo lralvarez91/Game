@@ -462,7 +462,7 @@ level1=TRUE;
 level2=FALSE;
 level3=FALSE;
 level4=FALSE;
-    timerId = startTimer(5);  
+    timerId = startTimer(20);  
 
   }
 }
@@ -471,7 +471,7 @@ level4=FALSE;
 void Zomgame::pauseGame()
 {
   if (paused) {
-    timerId = startTimer(1);//if already paused, unpause after 5 milliseconds
+    timerId = startTimer(20);//if already paused, unpause after 5 milliseconds
     paused = FALSE;
   } else {
     paused = TRUE;//pause game
